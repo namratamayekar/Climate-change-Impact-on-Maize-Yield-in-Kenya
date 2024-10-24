@@ -8,6 +8,12 @@ import os
 # Load the trained model
 filename = os.path.join(os.path.dirname(__file__), 'Tuned_Ridge_Reg.sav')
 
+# Check if the file exists
+if os.path.exists(filename):
+    st.write(f"Model file found at {filename}.")
+else:
+    st.error("Model file not found. Check the file path!")
+
 try:
     with open(filename, 'rb') as model_file:
         model = pickle.load(model_file)
