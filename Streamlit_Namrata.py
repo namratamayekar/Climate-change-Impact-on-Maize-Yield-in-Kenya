@@ -5,12 +5,21 @@ import numpy as np
 import pickle 
 
 # Load the trained model
-filename = 'Tuned_Ridge_Reg.sav'
-model = pickle.load(open(filename, 'rb')) 
+filename = os.path.join(os.path.dirname(__file__), 'Tuned_Ridge_Reg.sav')
+
+try:
+    with open(filename, 'rb') as model_file:
+        model = pickle.load(model_file)
+except Exception as e:
+    model = None
+    st.error(f"Error loading the model: {str(e)}")
 
 # Define the function to make predictions
 def predict_yield(input_data):
-    prediction = model.predict([input_data])
+    if model is None:
+        raise ValueError("Model not loaded properly.")
+    input_data = np.array(input_data).reshape(1, -1)  # Reshape the input for prediction
+    prediction = model.predict(input_data)
     return prediction[0]
 
 # Streamlit app interface
