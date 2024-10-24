@@ -11,9 +11,11 @@ filename = os.path.join(os.path.dirname(__file__), 'Tuned_Ridge_Reg.sav')
 try:
     with open(filename, 'rb') as model_file:
         model = pickle.load(model_file)
+        st.success("Model loaded successfully!")
 except Exception as e:
     model = None
     st.error(f"Error loading the model: {str(e)}")
+    st.stop() 
 
 # Define the function to make predictions
 def predict_yield(input_data):
@@ -90,6 +92,9 @@ if st.button("Predict Maize Yield"):
         st.session_state['wind_northward_m_s'], st.session_state['soil_water_L2_fraction'], 
         st.session_state['soil_water_L4_fraction'], st.session_state['precipitation_chirps_mm']
     ]
+
+    # Log inputs for debugging (optional)
+    st.write(f"Input data: {input_data}")
     
     
     # Call the predict function
