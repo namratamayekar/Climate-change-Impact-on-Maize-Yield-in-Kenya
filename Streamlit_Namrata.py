@@ -15,15 +15,19 @@ try:
 except Exception as e:
     model = None
     st.error(f"Error loading the model: {str(e)}")
-    st.stop() 
+    
 
 # Define the function to make predictions
 def predict_yield(input_data):
     if model is None:
         raise ValueError("Model not loaded properly.")
     input_data = np.array(input_data).reshape(1, -1)  # Reshape the input for prediction
-    prediction = model.predict(input_data)
-    return prediction[0]
+    try:
+        prediction = model.predict(input_data)
+        return prediction[0]
+    except Exception as e:
+        st.error(f"Error during prediction: {str(e)}")
+        return None
 
 # Streamlit app interface
 st.title("Maize Yield Prediction in Kenya")
