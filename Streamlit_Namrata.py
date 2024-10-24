@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle 
+import os
 
 # Load the trained model
 filename = os.path.join(os.path.dirname(__file__), 'Tuned_Ridge_Reg.sav')
